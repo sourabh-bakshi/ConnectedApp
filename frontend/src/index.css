@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,17 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+body{
+  display: flex;  
+  justify-content: center;
+  align-items: center;  
+  min-height: 90vh;
+  border: red solid 2px;    
+}
+.loginBox
+{
+  border: blue solid 2px;
+  min-width: 100px;
+  min-height: 100px;
 }

@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function Login() {
+    useEffect(() => {
+        console.log('Login Component Mounted');
+        
+    })
+    
   return (
     <>
+    
         <div className='loginBox'>
            <h2>Welcome To StayConnected</h2>
            <span>Your gateway to seamless conversations.</span>
@@ -12,6 +18,7 @@ export default function Login() {
              <button>Login</button>
            </form>
         </div>
+    
     </>
   )
 }
