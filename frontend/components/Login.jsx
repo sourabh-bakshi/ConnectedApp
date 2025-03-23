@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react'
+import logo from './logo.png'
+import {FcGoogle} from 'react-icons/fc'
+import {FaApple, FaMobileAlt} from 'react-icons/fa'
 
 export default function Login() {
     useEffect(() => {
@@ -10,19 +13,43 @@ export default function Login() {
     <>
     
         <div className='loginBox'>
-           <h2>Welcome To StayConnected</h2>
+          <header className='loginHeader'>
+            <img src={logo} alt='logo' className='logo'/>            
+           <h1 className='logoName'>StayConnected</h1>
            <span>Your gateway to seamless conversations.</span>
+           </header>
+           
            <form>
             <div className='Wrapper'>
-                <input type='text' id='username' placeholder='' required/>
+                <input className='loginInput' type='text' id='username' placeholder='' required/>
                 <label htmlFor='username'>UserName</label>
              </div>
             <div className="Wrapper">
-                <input type='password' id='password' placeholder='  ' required/>
-                <label htmlFor='password'>PassWord</label>
+                <input className='loginInput' type='password' id='password' placeholder='' required/>
+                <label htmlFor='password'>PassWord</label>                
             </div> 
-             <button>Login</button>
-           </form>
+            </form>
+            <div className='divider'>
+              <div className="divider-line"></div>
+              OR
+              <div className="divider-line"></div>
+            </div>
+            
+            <div className='altLogin'>
+                <br></br>
+                <button className='loginBtn' title='Google Sign In'>
+                  <FcGoogle size={24} className='loginIcon'/>
+                  <p>Google Login</p>
+                  </button>
+                <button className='loginBtn' title='Apple Sign In'>
+                  <FaApple size={24} className='loginIcon'/>
+                  <p>Apple Login</p>
+                  </button> 
+                <button className='loginBtn' title='Mobile Sign In'>
+                  <FaMobileAlt size={24} className='loginIcon'/>
+                  <p>Mobile Login</p>
+                </button>
+            </div>
         </div>
     
     </>
