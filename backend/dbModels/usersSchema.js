@@ -3,22 +3,32 @@ const mongoose = require('mongoose');
 const userSchemaRules = mongoose.Schema({
     userName: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        sparse: true,
     },
+    googleId:{
+        type: String,
+        unique: true,
+        sparse: true
+    },   
+    appleId:{
+        type: String,
+        unique: true,
+        sparse: true
+    }, 
     phoneNumber:{
-        type: Number,
-        required: true,
-        unique: true
+        type: String,
+        unique: true,
+        sparse: true,
     },
     email:{
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        sparse: true,
     },
     password:{
-        type: String,
-        required: true
+        type: String,        
+        sparse: true,        
     },
     profilePic:{
         type: String,

@@ -3,6 +3,8 @@ const userRouter = express.Router();
 const UserModel = require('../dbModels/usersSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const SALT_ROUNDS = 12;
 
@@ -56,7 +58,7 @@ userRouter.post('/login',async(req,res) => {
     
 })
 
-userRouter.post('/register', async(req, res) => {
+userRouter.post('/register', async(req, res) => {// incomplete register route need to complete--
     try {
         const {userName, phoneNumber, email, password} = req.body;
 
@@ -84,4 +86,11 @@ userRouter.post('/register', async(req, res) => {
     }
 })
 
+userRouter.get('/googleAuth', async(req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+})
 module.exports = userRouter;
