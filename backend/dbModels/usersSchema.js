@@ -54,4 +54,8 @@ const userSchemaRules = mongoose.Schema({
 
 const UserModel = mongoose.model("UserModel", userSchemaRules);
 
+UserModel.pre("save", function(next){
+    
+})
+
 module.exports = UserModel;
