@@ -3,30 +3,7 @@ const userSchema = require('../dbModels/usersSchema');
 
 const validateRegister = async (req, res, next) => {
     try {
-        const { userName, email, password, phoneNumber} = req.body;
-
-        const query = [];
-
-        if(userName)query.push({userName});
-        if(email)query.push({email});
-        if(phoneNumber)query.push({phoneNumber});
-
-        if(query.length > 0){
-            const user = await userSchema.findOne({$or: query});
-            
-            if(user){
-                let message = "User already exists";
-
-                if(user.userName === userName)message = "Username already exists";
-                else if(user.phoneNumber === phoneNumber)message = "Phone Number already exists";
-                else if(user.email === email)message = "Email already exists";
-
-                return res.status(400).json({
-                    success: false,
-                    message: message
-                });
-            }
-        }
+        const { userName, email, password, phoneNumber, profilePic} = req.body;
 
         if(!userName){
             return res.status(400).json({
@@ -75,6 +52,33 @@ const validateRegister = async (req, res, next) => {
             })
         }
 
+        const query = [];
+
+        if(userName)query.push({userName});
+        if(email)query.push({email});
+        if(phoneNumber)query.push({phoneNumber});
+
+        if(query.length > 0){
+            const user = await userSchema.findOne({$or: query});
+            
+            if(user){
+                let message = "User already exists";
+
+                if(user.userName === userName)message = "Username already exists";
+                else if(user.phoneNumber === phoneNumber)message = "Phone Number already exists";
+                else if(user.email === email)message = "Email already exists";
+
+                return res.status(400).json({
+                    success: false,
+                    message: message
+                });
+            }
+        }
+
+        req.validatedData = {userName, email, password};
+        if(phoneNumber)req.validatedData.phoneNumber = phoneNumber;
+        if(profilePic)req.validatedData.profilePic = profilePic;
+
         next();
                 
     } catch (error) {
@@ -98,12 +102,12 @@ const validateLoginUser = async (req, res, next) => {
             })
         }
         if(!password)
-            {
-                return res.status(400).json({
-                    success: false,
-                    message: "Password is Required"
-                });
-            }
+        {
+            return res.status(400).json({
+                success: false,
+                message: "Password is Required"
+            });
+        }
 
         const query = validator.isEmail(identifier) ? {email: identifier} : {userName: identifier};
 
@@ -115,6 +119,8 @@ const validateLoginUser = async (req, res, next) => {
                 message: "User not found!"
             });
         }
+        req.user = user;
+
         next();
 
     } catch (error) {

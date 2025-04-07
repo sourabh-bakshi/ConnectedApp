@@ -4,30 +4,25 @@ const UserModel = require('../dbModels/usersSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const { validateRegister, validateLoginUser } = require('../middlewares/validator');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const SALT_ROUNDS = 12;
 
-userRouter.post('/login',async(req,res) => {
+userRouter.post('/login', validateLoginUser, async(req,res) => {
     try { 
-        const {userName, password} = req.body;
-        const user = await UserModel.findOne({userName});
         
-        if(!user){
-            return res.status(404).json({
+        const {password} = req.body;        
+        const user = req.user;
+        
+        const isValidPassword = await bcrypt.compare(password, user.password);
+
+        if(!isValidPassword){
+            res.status(401).json({
                 success: false,
-                message: "User not found"
+                message: "Invalid Credentials!"
             })
         }
-
-        // const isValidPassword = await bcrypt.compare(password, user.password);
-
-        // if(!isValidPassword){
-        //     res.status(401).json({
-        //         success: false,
-        //         message: "Invalid Password"
-        //     })
-        // }
 
         const token = jwt.sign(
             {userId: user._id},
@@ -58,39 +53,44 @@ userRouter.post('/login',async(req,res) => {
     
 })
 
-userRouter.post('/register', async(req, res) => {// incomplete register route need to complete--
+userRouter.post('/register', validateRegister, async(req, res) => {// incomplete register route need to complete--
     try {
-        const {userName, phoneNumber, email, password} = req.body;
-
-        const existingUser = await UserSchema.findOne({phoneNumber});
-
-        if(existingUser){
-            res.status(400).json({
-                success: false,
-                message: "User already exists"
-            })
-        }
+        const {userName, phoneNumber, email, password, profilePic} = req.validatedData;
 
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
-        const hashedpassword = await bcrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new UserSchema({
             userName,
-            phoneNumber,
             email,
-            password: hashedpassword,
-            profilePic
+            password: hashedPassword,            
         })
+        if(phoneNumber) newUser.phoneNumber = phoneNumber;
+        if(profilePic) newUser.profilePic = profilePic;
+
+        await newUser.save();
+
+        res.status(201).json({
+            success: true,
+            message: "User Registered Successfully",
+            newUser
+        })
+
     } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            Error: error.message
+        })
         
     }
 })
 
-userRouter.get('/googleAuth', async(req, res) => {
-    try {
+// userRouter.get('/googleAuth', async(req, res) => {
+//     try {
         
-    } catch (error) {
+//     } catch (error) {
         
-    }
-})
+//     }
+// })
 module.exports = userRouter;
