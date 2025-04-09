@@ -1,5 +1,5 @@
 const validator = require('validator');
-const userSchema = require('../dbModels/usersSchema');
+const UserModel = require('../dbModels/usersSchema');
 
 const validateRegister = async (req, res, next) => {
     try {
@@ -59,7 +59,7 @@ const validateRegister = async (req, res, next) => {
         if(phoneNumber)query.push({phoneNumber});
 
         if(query.length > 0){
-            const user = await userSchema.findOne({$or: query});
+            const user = await UserModel.findOne({$or: query});
             
             if(user){
                 let message = "User already exists";
@@ -111,7 +111,7 @@ const validateLoginUser = async (req, res, next) => {
 
         const query = validator.isEmail(identifier) ? {email: identifier} : {userName: identifier};
 
-        const user = await userSchema.findOne(query);
+        const user = await UserModel.findOne(query);
         
         if(!user){
             return res.status(400).json({

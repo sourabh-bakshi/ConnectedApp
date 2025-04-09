@@ -60,11 +60,13 @@ userRouter.post('/register', validateRegister, async(req, res) => {// incomplete
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser = new UserSchema({
-            userName,
+        const newUser = new UserModel({
             email,
             password: hashedPassword,            
         })
+        if(!userName && email) newUser.userName = email;
+        if(!userName && !email && phoneNumber) newUser.userName = phoneNumber;
+        if(userName) newUser.userName = userName;
         if(phoneNumber) newUser.phoneNumber = phoneNumber;
         if(profilePic) newUser.profilePic = profilePic;
 
@@ -86,11 +88,11 @@ userRouter.post('/register', validateRegister, async(req, res) => {// incomplete
     }
 })
 
-// userRouter.get('/googleAuth', async(req, res) => {
-//     try {
+userRouter.get('/login/googleAuth', async(req, res) => {
+    try {
         
-//     } catch (error) {
+    } catch (error) {
         
-//     }
-// })
+    }
+})
 module.exports = userRouter;
