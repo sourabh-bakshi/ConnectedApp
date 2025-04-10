@@ -12,15 +12,15 @@ const passport = require('passport'); //importing passport for authentication
 
 
 app.use(cors({
-    origin: 'https://connectedapp-frontend.onrender.com', //replace with your frontend url
+    origin: 'https://connectedapp-frontend.onrender.com', 
     credentials: true
 }));//using cors for cross origin requests
 
 
-app.use(express.json());//Add middleware for body as json
-app.use(cookieParser());//Add middleware for cookie parser
+app.use(express.json());//Adding middleware for body as json
+app.use(cookieParser());//Adding middleware for cookie parser
 
-app.use(passport.initialize());//Add middleware for passport
+app.use(passport.initialize());//Adding middleware for passport
 
 //route imports
 app.use('/api/user', userRouter);
