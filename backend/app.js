@@ -35,6 +35,8 @@ app.use('/api/user', userRouter);
 connectDB();//connecting to the database
 
 //listening through env call to the declared port
-app.listen(process.env.PORT,() => {
-    console.log('server listening on port ,', process.env.PORT);
+
+const port =  process.env.PORT || 5000;
+app.listen(port ,() => {
+    console.log(`server listening on port ${port}`);
 });
