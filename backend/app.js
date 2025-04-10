@@ -12,7 +12,7 @@ const passport = require('passport'); //importing passport for authentication
 
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://connectedapp-frontend.onrender.com', //replace with your frontend url
     credentials: true
 }));//using cors for cross origin requests
 

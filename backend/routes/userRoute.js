@@ -108,7 +108,7 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
 
-        res.redirect('http://localhost:5173/dashboard'); // Redirect to your frontend URL
+        res.redirect('https://connectedapp-frontend.onrender.com/dashboard'); // Redirect to your frontend URL
 
     } catch (error) {
         res.status(500).json({
