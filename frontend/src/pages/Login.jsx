@@ -35,7 +35,7 @@ export default function Login() {
   }
 
   const gLogin = () => {
-    window.location.href = 'http://localhost:5000/api/user/login/googleAuth';
+    window.location.href = 'https://connectedapp.onrender.com/api/user/login/googleAuth';
   }
 
   
