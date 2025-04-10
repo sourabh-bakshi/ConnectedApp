@@ -3,9 +3,10 @@ const userRouter = express.Router();
 const UserModel = require('../dbModels/usersSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
 const { validateRegister, validateLoginUser } = require('../middlewares/validator');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport = require('passport');
+require('../middlewares/passportConfig');
+
 
 const SALT_ROUNDS = 12;
 
@@ -88,11 +89,34 @@ userRouter.post('/register', validateRegister, async(req, res) => {// incomplete
     }
 })
 
-userRouter.get('/login/googleAuth', async(req, res) => {
+userRouter.get('/login/googleAuth', passport.authenticate('google',{scope: ['profile', 'email']}))
+
+userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {session: false}), (req, res) => {
     try {
+        if(!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: "Authentication Failed"
+            });
+        }
+        const {user, token} = req.user;
         
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        })
+
+        res.redirect('http://localhost:5173/dashboard'); // Redirect to your frontend URL
+
     } catch (error) {
-        
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        });        
     }
-})
+
+});
 module.exports = userRouter;

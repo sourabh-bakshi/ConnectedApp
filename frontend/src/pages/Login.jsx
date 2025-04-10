@@ -3,7 +3,8 @@ import logo from './logo.png'
 import {FcGoogle} from 'react-icons/fc'
 import {FaApple, FaMobileAlt, FaAt, FaLock} from 'react-icons/fa'
 import { loginUser } from '../../api/users';
-// import {GoogleOAuthProvider, useGoogleLogin} from '../../api/googleLogin';
+
+import {GoogleOAuthProvider} from '@react-oauth/google';
 
 export default function Login() {
   const [formData, setFormData] = useState({userName:'', password:''});
@@ -13,7 +14,6 @@ export default function Login() {
   }
 
   const submit = async(value) => {
-    
     try {
       value.preventDefault();
       const loginValidation = await loginUser({userName:formData.userName, password:formData.password});
@@ -31,11 +31,14 @@ export default function Login() {
     } catch (error) {
       console.error('Login Error',error.message);
       alert('Login Error',error.message);      
-      // console.error('Login Error',error.response?.data?.message || error.message);
-      // alert('Login Error',error.response?.data?.message || error.message);      
     }
-    
   }
+
+  const gLogin = () => {
+    window.location.href = 'http://localhost:5000/api/user/login/googleAuth';
+  }
+
+  
     
   return (
     <>
@@ -89,13 +92,13 @@ export default function Login() {
             
             <div className='altLogin'>
                 <br></br>
-                {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}> */}
-                {/* <button className='loginBtn' title='Google Sign In' onClick={useGoogleLogin}> */}
-                <button className='loginBtn' title='Google Sign In'>
+                <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                <button className='loginBtn' title='Google Sign In' onClick={gLogin}>
+                {/* <button className='loginBtn' title='Google Sign In'> */}
                   <FcGoogle size={24} className='loginIcon'/>
                   <p className='p'>Google Login</p>
                   </button>
-                  {/* </GoogleOAuthProvider> */}
+                  </GoogleOAuthProvider>
                 <button className='loginBtn' title='Apple Sign In'>
                   <FaApple size={24} className='loginIcon'/>
                   <p>Apple Login</p>

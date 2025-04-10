@@ -1,15 +1,20 @@
-const passport = require('passport');
+const passportConfig = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const UserModel = require('../dbModels/usersSchema');
+const JWT = require('jsonwebtoken');
 
-passport.use(new GoogleStrategy({
+passportConfig.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'login/googleAuth/callback',
+    callbackURL: 'http://localhost:5000/api/user/login/googleAuth/callback',
 }, async(accessToken, refreshToken, profile, done) => {
     
     try {
-        let user = await UserModel.findOne({googleId: profile.id});
+        let user = await UserModel.findOne( {$or:[ 
+            {googleId: profile.id},
+            {email: profile.emails[0].value}            
+        ]
+    });
 
         if(!user)
         {
@@ -21,9 +26,26 @@ passport.use(new GoogleStrategy({
             })
             await user.save();
         }
+        else
+        {
+            if(!user.googleId)
+            {
+                user.googleId = profile.id;
+                await user.save();
+            }
+        }
+
+        const token = JWT.sign(
+            {userId: user._id},
+            process.env.JWT_SECRET,
+            {expiresIn: '1d'}
+        );
+
+        done(null, {user, token});
     } catch (error) {
-        
+        done(error, null);
     }
 }
-))
+));
 
+module.exports = passportConfig;
