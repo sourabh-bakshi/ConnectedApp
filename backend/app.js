@@ -1,36 +1,30 @@
 //importing the required 
-const express = require('express');
-const app = express();
-const dotenv = require('dotenv');
+const express = require('express'); //importing express
+const app = express();  //creating an instance of express
+const dotenv = require('dotenv'); //importing dotenv for environment variables
 dotenv.config(); //connectecting to the env file for required variables
-const cors = require('cors');
-const connectDB = require('./config/db');
-const cookieParser = require('cookie-parser');
+const cors = require('cors');// importing cors for cross origin requests
+const connectDB = require('./config/db'); //importing the db connection file a
+const cookieParser = require('cookie-parser'); //importing cookie parser for cookies
 const userRouter = require('./routes/userRoute');//importing the user route
-const passport = require('passport');
-const session = require('express-session');
+const passport = require('passport'); //importing passport for authentication
+
+
 
 app.use(cors({
     origin: '*',
     credentials: true
 }));//using cors for cross origin requests
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-}));//using session for express session
 
 app.use(express.json());//Add middleware for body as json
 app.use(cookieParser());//Add middleware for cookie parser
 
 app.use(passport.initialize());//Add middleware for passport
-app.use(passport.session());//Add middleware for passport session
 
 //route imports
 app.use('/api/user', userRouter);
-
-
+//not using express-session as it is not required for this project using jwt token and sesson instead of cookies
 
 connectDB();//connecting to the database
 
