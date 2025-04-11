@@ -89,7 +89,7 @@ userRouter.post('/register', validateRegister, async(req, res) => {// incomplete
     }
 })
 
-userRouter.get('/login/googleAuth', passport.authenticate('google',{scope: ['profile', 'email']}))
+userRouter.get('/login/googleAuth', passport.authenticate('google',{scope: ['profile', 'email'],prompt: 'select_account'}));
 
 userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {session: false}), (req, res) => {
     try {
@@ -99,7 +99,13 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
                 message: "Authentication Failed"
             });
         }
-        const {user, token} = req.user;
+        const {user} = req.user;
+
+        const token = jwt.sign(
+            {userId: user._id},
+            process.env.JWT_SECRET,
+            {expiresIn: '1d'}
+        );
         
         res.cookie('token', token, {
             httpOnly: true,

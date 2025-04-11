@@ -35,13 +35,7 @@ passportConfig.use(new GoogleStrategy({
             }
         }
 
-        const token = JWT.sign(
-            {userId: user._id},
-            process.env.JWT_SECRET,
-            {expiresIn: '1d'}
-        );
-
-        done(null, {user, token});
+        done(null, {user});
     } catch (error) {
         done(error, null);
     }
