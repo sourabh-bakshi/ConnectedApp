@@ -91,7 +91,7 @@ userRouter.post('/register', validateRegister, async(req, res) => {// incomplete
 
 userRouter.get('/login/googleAuth', passport.authenticate('google',{scope: ['profile', 'email'],prompt: 'select_account'}));
 
-userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {session: false}), (req, res) => {
+userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {session: false}), async (req, res) => {
     try {
         if(!req.user) {
             return res.status(401).json({
@@ -99,7 +99,10 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
                 message: "Authentication Failed"
             });
         }
-        const {user} = req.user;
+        console.log(req.user);
+        const user = req.user;
+
+        console.log(user);
 
         const token = jwt.sign(
             {userId: user._id},
