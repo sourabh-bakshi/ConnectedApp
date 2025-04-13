@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const userSchemaRules = mongoose.Schema({
     userName: {
         type: String,
-        unique: true,
-        sparse: true,
+        required: true,       
+        default: "SET USERNAME", 
     },
     googleId:{
         type: String,
