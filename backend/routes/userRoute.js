@@ -128,4 +128,31 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
     }
 
 });
+
+userRouter.get('/getUser', async (req, res) => {
+    try{
+        const token = req.cookies.token;
+        
+        if(!token) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized! Please login first"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            message: "User Found",
+            token
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+});
+
+
 module.exports = userRouter;

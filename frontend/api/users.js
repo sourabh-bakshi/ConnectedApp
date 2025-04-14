@@ -19,6 +19,17 @@ const registerUser = async(userName, phoneNumber, email, password) => {
         throw error;        
     }
 }
+
+const getUser = async() => {
+    try {
+        const response = await axiosInstance.get('api/user/getUser');
+        return response.data;
+    } catch (error) {
+        console.error(error.message);
+        throw error;        
+    }
+}    
+
 export{ 
     loginUser, registerUser
 }

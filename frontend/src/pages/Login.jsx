@@ -6,6 +6,7 @@ import { loginUser } from '../../api/users';
 
 import {GoogleOAuthProvider} from '@react-oauth/google';
 
+
 export default function Login() {
   const [formData, setFormData] = useState({userName:'', password:''});
 
@@ -38,8 +39,6 @@ export default function Login() {
     window.location.href = 'https://connectedapp.onrender.com/api/user/login/googleAuth';
                            
   }
-
-  
     
   return (
     <>
