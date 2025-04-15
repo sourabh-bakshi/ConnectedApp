@@ -17,12 +17,14 @@ export default function Login() {
   const submit = async(value) => {
     try {
       value.preventDefault();
-      const loginValidation = await loginUser({userName:formData.userName, password:formData.password});
+      
+      const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});
       
       if(loginValidation.success)
       {
         console.log('Login Successful',loginValidation.message);
         alert('Login Successful',loginValidation.message);
+        window.location.href = '/dashboard';
       }
       else
       {

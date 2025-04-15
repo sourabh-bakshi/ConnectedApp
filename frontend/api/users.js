@@ -1,8 +1,8 @@
 import {axiosInstance} from './axios';
 
-const loginUser = async(userName, password) => {
+const loginUser = async({identifier, password}) => {
     try {
-        const response = await axiosInstance.post('api/user/login', {userName, phoneNumber, email, password, profilePic});
+        const response = await axiosInstance.post('api/user/login', {identifier, password});
         return response.data;
     } catch (error) {
         console.error(error.message);

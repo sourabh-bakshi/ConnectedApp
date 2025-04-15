@@ -94,6 +94,8 @@ const validateRegister = async (req, res, next) => {
 const validateLoginUser = async (req, res, next) => {
     try {
         const {identifier, password} = req.body;
+        console.log(req.body.identifier, req.body.password, 'identifier and password');
+        
 
         if(!identifier){
             return res.status(400).json({
@@ -103,6 +105,7 @@ const validateLoginUser = async (req, res, next) => {
         }
         if(!password)
         {
+            console.log('comes here');
             return res.status(400).json({
                 success: false,
                 message: "Password is Required"

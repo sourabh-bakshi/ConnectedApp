@@ -160,26 +160,8 @@ html, body {
 }
 .loginBtn p{
   margin: 0;
-  /* animation: flip 7s steps(100) infinite;  
-  will-change: transform, color;
-  transform-style: preserve-3d; */
 }
-/* @keyframes flip{
-  0%,50%,70%,90%,100%{
-    transform: rotateY(0deg);
-  }  
-  60%{
-    transform: rotateY(30deg);
-    color: gray;
-  }
-  70%{
-    transform: rotateY(0deg);
-  }
-  80%{
-    transform: rotateY(-30deg);
-    color: gray;
-  }  
-} */
+
 .loginIcon{
   animation: rotate 7s steps(100) infinite ;
   animation-play-state: running;

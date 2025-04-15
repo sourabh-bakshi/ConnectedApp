@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validateRegister, validateLoginUser } = require('../middlewares/validator');
 const passport = require('passport');
+const authenticator = require('../middlewares/authenticator');
 require('../middlewares/passportConfig');
 
 
@@ -118,6 +119,7 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
         })
 
         res.redirect('https://connectedapp-frontend.onrender.com/dashboard'); // Redirect to your frontend URL
+        // res.redirect('http://localhost:5173//dashboard'); // Redirect to your frontend URL
 
     } catch (error) {
         res.status(500).json({
@@ -129,30 +131,54 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
 
 });
 
-userRouter.get('/getUser', async (req, res) => {
-    try{
-        const token = req.cookies.token;
+userRouter.get('/getUser', authenticator, async (req, res) => {
+    try {
+        const userId = req.body.userId;
         
-        if(!token) {
+        if(!userId) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized! Please login first"
-            })
-        }
+            });
+        };
+
+        const verifiedUser = await UserModel.findById(userId).select('userName email phoneNumber');
+        
         res.status(200).json({
             success: true,
-            message: "User Found",
-            token
+            message: 'User Verified',
+            verifiedUser
         });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        });        
     }
-    catch (error) {
+})
+
+userRouter.get('/logout', async(req, res) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            sameSite: 'Lax',
+            secure: process.env.NODE_ENV === 'production',
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Logout Successful"
+        });
+
+    } catch (error) {
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
             error: error.message
         });
     }
-});
-
+})
 
 module.exports = userRouter;

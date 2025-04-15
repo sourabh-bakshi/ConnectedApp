@@ -17,8 +17,8 @@ const connectDB = async() => {
         await mongoose.connect(process.env.DB_URL);
         console.log('Connected to the database');
 
-        await UserModel.syncIndexes(); 
-        console.log('Syncing indexes...');
+        // await UserModel.syncIndexes(); 
+        // console.log('Syncing indexes...');
         // trying to sync index in case of changes in the schema
     } catch (error) {
         console.log(e);
