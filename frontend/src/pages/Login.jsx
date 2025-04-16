@@ -3,12 +3,13 @@ import logo from './logo.png'
 import {FcGoogle} from 'react-icons/fc'
 import {FaApple, FaMobileAlt, FaAt, FaLock} from 'react-icons/fa'
 import { loginUser } from '../../api/users';
-
+import Loader from './Loader';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 
 
 export default function Login() {
   const [formData, setFormData] = useState({userName:'', password:''});
+  const [loading, setloading] = useState(false);
 
   const handleChange = (e) => {
     setFormData(  {...formData, [e.target.name]: e.target.value}  );
@@ -17,13 +18,15 @@ export default function Login() {
   const submit = async(value) => {
     try {
       value.preventDefault();
+      setloading(true);
       
       const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});
       
       if(loginValidation.success)
       {
         console.log('Login Successful',loginValidation.message);
-        alert('Login Successful',loginValidation.message);
+        // alert('Login Successful',loginValidation.message);
+        setloading(false);
         window.location.href = '/dashboard';
       }
       else
@@ -33,7 +36,7 @@ export default function Login() {
       
     } catch (error) {
       console.error('Login Error',error.message);
-      alert('Login Error',error.message);      
+      // alert('Login Error',error.message);      
     }
   }
 
@@ -43,8 +46,8 @@ export default function Login() {
   }
     
   return (
-    <>
-    
+    loading ? <Loader/> :
+    <>    
         <div className='loginBox'>
           <header className='loginHeader'>
             <img src={logo} alt='logo' className='logo'/>            
