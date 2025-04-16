@@ -1,4 +1,5 @@
 import React from 'react'
+import './Styles/Loader.css'
 
 function Loader() {
   return (
