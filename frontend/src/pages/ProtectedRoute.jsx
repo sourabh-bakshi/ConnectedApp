@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getUser } from '../../api/users';
-
+import Loader from './Loader';
 
 export default function ProtectedRoute({children}) {
     const [userData ,setUserData] = useState(null);
@@ -31,6 +31,6 @@ export default function ProtectedRoute({children}) {
       },[]);  
 
   return (
-    userData ? children : <div> Access Denied </div>
+    userData ? children : <Loader/>
   )
 }
