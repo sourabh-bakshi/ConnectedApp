@@ -5,12 +5,12 @@ const validateRegister = async (req, res, next) => {
     try {
         const { userName, email, password, phoneNumber, profilePic} = req.body;
 
-        if(!userName){
-            return res.status(400).json({
-                success: false,
-                message: "UserName is Required"
-            })
-        }
+        // if(!userName){
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "UserName is Required"
+        //     })
+        // }
 
         if(!email && !phoneNumber){
             return res.status(400).json({
@@ -54,7 +54,7 @@ const validateRegister = async (req, res, next) => {
 
         const query = [];
 
-        if(userName)query.push({userName});
+        // if(userName)query.push({userName});
         if(email)query.push({email});
         if(phoneNumber)query.push({phoneNumber});
 
@@ -62,11 +62,11 @@ const validateRegister = async (req, res, next) => {
             const user = await UserModel.findOne({$or: query});
             
             if(user){
-                let message = "User already exists";
+                let message = "";
 
-                if(user.userName === userName)message = "Username already exists";
-                else if(user.phoneNumber === phoneNumber)message = "Phone Number already exists";
-                else if(user.email === email)message = "Email already exists";
+                // if(user.userName === userName)message = "Username already exists";
+                if(phoneNumber && user.phoneNumber === phoneNumber)message = "Phone Number already exists";
+                else if(email && user.email === email)message = "Email already exists";
 
                 return res.status(400).json({
                     success: false,
