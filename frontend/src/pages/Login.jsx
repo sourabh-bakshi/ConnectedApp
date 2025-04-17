@@ -36,7 +36,11 @@ export default function Login() {
       
     } catch (error) {
       console.error('Login Error',error.message);
-      // alert('Login Error',error.message);      
+      alert('Login Error',error.message);      
+      window.location.href = '/';
+    }
+    finally{
+      setloading(false);
     }
   }
 
