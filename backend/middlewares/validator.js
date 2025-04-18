@@ -28,6 +28,7 @@ const validateRegister = async (req, res, next) => {
         }
 
         if(email && !validator.isEmail(email) ){
+            console.log('coming from here email');
             return res.status(400).json({
                 success: false,
                 message: "Invalid Email"
@@ -54,7 +55,6 @@ const validateRegister = async (req, res, next) => {
 
         const query = [];
 
-        // if(userName)query.push({userName});
         if(email)query.push({email});
         if(phoneNumber)query.push({phoneNumber});
 
@@ -62,9 +62,11 @@ const validateRegister = async (req, res, next) => {
             const user = await UserModel.findOne({$or: query});
             
             if(user){
+
                 let message = "";
 
                 // if(user.userName === userName)message = "Username already exists";
+
                 if(phoneNumber && user.phoneNumber === phoneNumber)message = "Phone Number already exists";
                 else if(email && user.email === email)message = "Email already exists";
 
@@ -75,7 +77,8 @@ const validateRegister = async (req, res, next) => {
             }
         }
 
-        req.validatedData = {userName, email, password};
+        req.validatedData = {email, password};
+        if(userName)req.validatedData.userName = userName;
         if(phoneNumber)req.validatedData.phoneNumber = phoneNumber;
         if(profilePic)req.validatedData.profilePic = profilePic;
 
@@ -94,9 +97,7 @@ const validateRegister = async (req, res, next) => {
 const validateLoginUser = async (req, res, next) => {
     try {
         const {identifier, password} = req.body;
-        console.log(req.body.identifier, req.body.password, 'identifier and password');
         
-
         if(!identifier){
             return res.status(400).json({
                 success: false,
@@ -105,7 +106,6 @@ const validateLoginUser = async (req, res, next) => {
         }
         if(!password)
         {
-            console.log('comes here');
             return res.status(400).json({
                 success: false,
                 message: "Password is Required"

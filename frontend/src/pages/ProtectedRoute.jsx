@@ -20,6 +20,7 @@ export default function ProtectedRoute({children}) {
                      
           }
         } catch (error) {
+          
           console.error('User Verification Error',error.message);
           alert('User Verification Error',error.message);   
           window.location.href = '/';         

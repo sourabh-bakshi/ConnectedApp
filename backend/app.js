@@ -26,7 +26,7 @@ app.use(passport.initialize());//Adding middleware for passport
 //route imports
 app.use('/api/user', userRouter);
 //not using express-session as it is not required for this project using jwt token and sesson instead of cookies
-
+    
 connectDB();//connecting to the database
 
 //listening through env call to the declared port

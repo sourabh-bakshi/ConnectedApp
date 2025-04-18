@@ -5,10 +5,11 @@ module.exports = function (req, res, next) {
         const token = req.cookies.token;
         
         if(!token) {
+            console.log('comes here middleware no token');
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized! Please login first"
-            })
+            });
         }
 
         const verifiedToken = jwt.verify(token, process.env.JWT_SECRET);

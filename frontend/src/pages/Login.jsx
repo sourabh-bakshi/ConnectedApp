@@ -3,8 +3,9 @@ import logo from './logo.png'
 import {FcGoogle} from 'react-icons/fc'
 import {FaApple, FaMobileAlt, FaAt, FaLock} from 'react-icons/fa'
 import { loginUser } from '../../api/users';
-import Loader from './Loader';
+
 import {GoogleOAuthProvider} from '@react-oauth/google';
+import Loader from './Loader';
 
 
 export default function Login() {
@@ -37,27 +38,26 @@ export default function Login() {
     } catch (error) {
       console.error('Login Error',error.message);
       alert('Login Error',error.message);      
-      window.location.href = '/';
-    }
-    finally{
-      setloading(false);
     }
   }
 
   const gLogin = () => {
-    window.location.href = 'https://connectedapp.onrender.com/api/user/login/googleAuth';
+    window.location.href = 'https://connectedapp-production.up.railway.app/api/user/login/googleAuth';    
                            
   }
     
   return (
     loading ? <Loader/> :
-    <>    
+
+    <>
+    
         <div className='loginBox'>
           <header className='loginHeader'>
             <img src={logo} alt='logo' className='logo'/>            
            <h1 className='logoName'>StayConnected</h1>
            <span>Your gateway to seamless conversations.</span>
            </header>
+           
            
            <form onSubmit={submit}>
             <div className='Wrapper'>
@@ -120,5 +120,5 @@ export default function Login() {
         </div>
     
     </>
-  )
+  );
 }

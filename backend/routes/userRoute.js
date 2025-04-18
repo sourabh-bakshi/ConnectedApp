@@ -100,10 +100,8 @@ userRouter.get('/login/googleAuth/callback', passport.authenticate('google', {se
                 message: "Authentication Failed"
             });
         }
-        console.log(req.user);
+        
         const user = req.user;
-
-        console.log(user);
 
         const token = jwt.sign(
             {userId: user._id},
@@ -136,6 +134,7 @@ userRouter.get('/getUser', authenticator, async (req, res) => {
         const userId = req.body.userId;
         
         if(!userId) {
+            console.log('coming from here');
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized! Please login first"

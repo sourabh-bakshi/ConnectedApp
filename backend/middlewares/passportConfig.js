@@ -6,7 +6,7 @@ const JWT = require('jsonwebtoken');
 passportConfig.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://connectedapp.onrender.com/api/user/login/googleAuth/callback',
+    callbackURL: 'https://connectedapp-production.up.railway.app/api/user/login/googleAuth/callback',
 }, async(accessToken, refreshToken, profile, done) => {
     
     try {

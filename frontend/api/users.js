@@ -10,9 +10,9 @@ const loginUser = async({identifier, password}) => {
     }
 }
 
-const registerUser = async(userName, phoneNumber, email, password) => {
+const registerUser = async(userName, phoneNumber, email, password, profilePic) => {
     try {
-        const response = await axiosInstance.post('api/user/register',{userName, phoneNumber, email, password});
+        const response = await axiosInstance.post('api/user/register',{userName, phoneNumber, email, password, profilePic});
         return response.data;
     } catch (error) {
         console.error(error.message);
