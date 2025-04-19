@@ -2,7 +2,7 @@ import {axiosInstance} from './axios';
 
 const loginUser = async({identifier, password}) => {
     try {
-        const response = await axiosInstance.post('api/user/login', {identifier, password});
+        const response = await axiosInstance.post('/api/user/login', {identifier, password});
         return response.data;
     } catch (error) {
         console.error(error.message);
@@ -12,7 +12,7 @@ const loginUser = async({identifier, password}) => {
 
 const registerUser = async(userName, phoneNumber, email, password, profilePic) => {
     try {
-        const response = await axiosInstance.post('api/user/register',{userName, phoneNumber, email, password, profilePic});
+        const response = await axiosInstance.post('/api/user/register',{userName, phoneNumber, email, password, profilePic});
         return response.data;
     } catch (error) {
         console.error(error.message);
@@ -22,7 +22,7 @@ const registerUser = async(userName, phoneNumber, email, password, profilePic) =
 
 const getUser = async() => {
     try {
-        const response = await axiosInstance.get('api/user/getUser');
+        const response = await axiosInstance.get('/api/user/getUser');
         return response.data;
     } catch (error) {
         console.error(error.message);
