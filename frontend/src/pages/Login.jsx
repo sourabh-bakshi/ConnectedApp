@@ -42,7 +42,8 @@ export default function Login() {
   }
 
   const gLogin = () => {
-    window.location.href = 'https://connectedapp-production.up.railway.app/api/user/login/googleAuth';    
+    window.location.href = 'https://proxy-server-production-ac45.up.railway.app/api/user/login/googleAuth';    
+    // window.location.href = 'https://connectedapp-production.up.railway.app/api/user/login/googleAuth';    
                            
   }
     
