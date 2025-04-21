@@ -7,10 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://connectedapp-production.up.railway.app',
+        target: 'https://connectedapp-production.up.railway.app/api',
         changeOrigin: true,
-        secure: false,
-        ws: true,
+        secure: true,
       },
     },
   },

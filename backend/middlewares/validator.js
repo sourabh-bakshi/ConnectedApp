@@ -98,6 +98,7 @@ const validateLoginUser = async (req, res, next) => {
     try {
         const {identifier, password} = req.body;
         
+        console.log('Login Validation',identifier, password);
         if(!identifier){
             return res.status(400).json({
                 success: false,

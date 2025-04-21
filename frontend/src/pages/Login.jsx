@@ -22,10 +22,12 @@ export default function Login() {
       setloading(true);
       
       const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});
+      console.log('Login Validation',loginValidation);
       
       if(loginValidation.success)
       {
         console.log('Login Successful',loginValidation.message);
+        console.log('token',loginValidation.token);
         // alert('Login Successful',loginValidation.message);
         setloading(false);
         window.location.href = '/dashboard';
