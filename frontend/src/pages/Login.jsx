@@ -27,7 +27,7 @@ export default function Login() {
       if(loginValidation.success)
       {
         console.log('Login Successful',loginValidation.message);
-        alert('token',loginValidation.token);
+        alert(loginValidation.token);
         // alert('Login Successful',loginValidation.message);
         setloading(false);
         // window.location.href = '/dashboard';
