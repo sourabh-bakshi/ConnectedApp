@@ -12,7 +12,7 @@ const passport = require('passport'); //importing passport for authentication
 
 
 app.use(cors({
-    origin: 'https://proxy-server-production-ac45.up.railway.app', 
+    origin: 'https://connectedapp-frontend.onrender.com', 
     // origin: 'http://localhost:5173', 
     credentials: true
 }));//using cors for cross origin requests
