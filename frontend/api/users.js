@@ -30,6 +30,15 @@ const getUser = async() => {
     }
 }    
 
+const logoutUser = async() => {
+    try {
+        const response = await axiosInstance.get('/api/user/logout');
+        return response.data;
+    } catch (error) {
+        console.error(error.message);
+        throw error;                
+    }
+}
 export{ 
     loginUser, registerUser, getUser
 }
