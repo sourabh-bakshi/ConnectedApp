@@ -28,7 +28,7 @@ const validateRegister = async (req, res, next) => {
         }
 
         if(email && !validator.isEmail(email) ){
-            console.log('coming from here email');
+            
             return res.status(400).json({
                 success: false,
                 message: "Invalid Email"
@@ -98,7 +98,6 @@ const validateLoginUser = async (req, res, next) => {
     try {
         const {identifier, password} = req.body;
         
-        console.log('Login Validation',identifier, password);
         if(!identifier){
             return res.status(400).json({
                 success: false,

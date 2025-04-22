@@ -3,10 +3,9 @@ const jwt = require('jsonwebtoken');
 module.exports = function (req, res, next) {
     try{
         const token = req.cookies.token;
-        console.log('token from middleware', token);
         
         if(!token) {
-            console.log('comes here middleware no token');
+            
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized! Please login first"

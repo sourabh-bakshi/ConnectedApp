@@ -8,20 +8,18 @@ export default function ProtectedRoute({children}) {
     const verfiyUser = async() => {
         try {
           const user = await getUser();
-          console.log('User Verification',user);
+          
           if(user.success)
           {
-            console.log('User Verified',user.message);
-            setUserData(user.verifiedUser);
+            setUserData(user.verifiedUser);            
           }
           else
           {
             alert('Invalid Credentials',user.message);   
-                     
+            window.location.href = '/';                           
           }
         } catch (error) {
           
-          console.error('User Verification Error',error.message);
           alert('User Verification Error',error.message);   
           window.location.href = '/';         
         }

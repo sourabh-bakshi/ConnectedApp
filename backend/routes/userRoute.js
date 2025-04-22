@@ -138,7 +138,7 @@ userRouter.get('/getUser', authenticator, async (req, res) => {
         const userId = req.body.userId;
         
         if(!userId) {
-            console.log('coming from here');
+            
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized! Please login first"

@@ -21,25 +21,26 @@ export default function Login() {
       value.preventDefault();
       setloading(true);
       
-      const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});
-      console.log('Login Validation',loginValidation);
+      const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});      
       
       if(loginValidation.success)
       {
-        console.log('Login Successful',loginValidation.message);
-        alert(loginValidation.token);
+        
         // alert('Login Successful',loginValidation.message);
         setloading(false);
         window.location.href = '/dashboard';
       }
       else
       {
-        console.log('Login Failed',loginValidation.message);
+        alert('Login Failed',loginValidation.message);
+        setloading(false);
+        window.location.href = '/';
       }
       
     } catch (error) {
-      console.error('Login Error',error.message);
-      alert('Login Error',error.message);      
+      alert('Login Error',error.message);   
+      setloading(false);
+      window.location.href = '/';   
     }
   }
 
@@ -53,7 +54,6 @@ export default function Login() {
     loading ? <Loader/> :
 
     <>
-    
         <div className='loginBox'>
           <header className='loginHeader'>
             <img src={logo} alt='logo' className='logo'/>            
@@ -121,7 +121,6 @@ export default function Login() {
                 </button>
             </div>
         </div>
-    
     </>
   );
 }

@@ -11,7 +11,7 @@ passportConfig.use(new GoogleStrategy({
 }, async(accessToken, refreshToken, profile, done) => {
     
     try {
-        console.log(profile);
+        
         let user = await UserModel.findOne( {$or:[ 
             {googleId: profile.id},
             {email: profile.emails[0].value}            
