@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { logoutUser } from '../../api/users';
 
 export default function Dashboard() {
   const [loading, setloading] = useState(false);
@@ -32,7 +33,7 @@ export default function Dashboard() {
   
   return (
     <>
-    <div className="logout" onClick={handleclick}>Logout</div>
+    <button onClick={handleclick} className='logoutBtn'>Logout</button>
     <div>Dashboard</div>
     </>
   )

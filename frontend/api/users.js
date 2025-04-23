@@ -40,5 +40,5 @@ const logoutUser = async() => {
     }
 }
 export{ 
-    loginUser, registerUser, getUser
+    loginUser, registerUser, getUser , logoutUser
 }

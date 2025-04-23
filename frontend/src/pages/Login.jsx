@@ -22,11 +22,13 @@ export default function Login() {
       setloading(true);
       
       const loginValidation = await loginUser({identifier:formData.userName, password:formData.password});      
+      console.log('loginValidation',loginValidation);
       
       if(loginValidation.success)
       {
         
         // alert('Login Successful',loginValidation.message);
+
         setloading(false);
         window.location.href = '/dashboard';
       }
@@ -34,13 +36,13 @@ export default function Login() {
       {
         alert('Login Failed',loginValidation.message);
         setloading(false);
-        window.location.href = '/';
+        // window.location.href = '/';
       }
       
     } catch (error) {
       alert('Login Error',error.message);   
       setloading(false);
-      window.location.href = '/';   
+      // window.location.href = '/';   
     }
   }
 
