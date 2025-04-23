@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
         'Content-Type': 'application/json',
     },
     
-    // baseURL: 'https://connectedapp-production.up.railway.app',
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://connectedapp-production.up.railway.app',
+    // baseURL: 'http://localhost:5000',
     withCredentials: true
 });
